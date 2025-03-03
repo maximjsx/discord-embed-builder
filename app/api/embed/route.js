@@ -24,11 +24,39 @@ import { decompressFromBase64 } from "lz-string";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
+  const format = searchParams.get("format");
+
+  if (format === "json") {
+    const authorName = searchParams.get("author_name") || "";
+    const authorUrl = searchParams.get("author_url") || "";
+    const providerName = searchParams.get("provider_name") || "";
+    const providerUrl = searchParams.get("provider_url") || "";
+    const title = searchParams.get("t") || searchParams.get("title") || "";
+    const description =
+      searchParams.get("d") || searchParams.get("description") || "";
+
+    const jsonResponse = {
+      type: "rich",
+      version: "1.0",
+      title: title,
+      author_name: authorName,
+      author_url: authorUrl,
+      provider_name: providerName,
+      provider_url: providerUrl,
+      description: description,
+    };
+
+    return NextResponse.json(jsonResponse);
+  }
 
   let title = "",
     description = "",
     image = "",
-    color = "";
+    color = "",
+    authorName = "",
+    authorUrl = "",
+    providerName = "",
+    providerUrl = "";
 
   const encryptedData = searchParams.get("data");
   if (encryptedData) {
@@ -42,6 +70,10 @@ export async function GET(request) {
         description = parsedData.d || "";
         image = parsedData.i || "";
         color = parsedData.c || "#5865F2";
+        authorName = parsedData.an || "";
+        authorUrl = parsedData.au || "";
+        providerName = parsedData.pn || "";
+        providerUrl = parsedData.pu || "";
       }
     } catch (error) {
       console.error("Error decoding data:", error);
@@ -52,7 +84,15 @@ export async function GET(request) {
       searchParams.get("d") || searchParams.get("description") || "";
     image = searchParams.get("i") || searchParams.get("image") || "";
     color = searchParams.get("c") || searchParams.get("color") || "#5865F2";
+    authorName = searchParams.get("author_name") || "";
+    authorUrl = searchParams.get("author_url") || "";
+    providerName = searchParams.get("provider_name") || "";
+    providerUrl = searchParams.get("provider_url") || "";
   }
+
+  const currentUrl = new URL(request.url);
+  const baseUrl = `${currentUrl.protocol}//${currentUrl.host}`;
+  const oembedUrl = `${baseUrl}/api/embed?format=json&t=${encodeURIComponent(title)}&d=${encodeURIComponent(description)}&author_name=${encodeURIComponent(authorName)}&author_url=${encodeURIComponent(authorUrl)}&provider_name=${encodeURIComponent(providerName)}&provider_url=${encodeURIComponent(providerUrl)}`;
 
   const html = `
 <!DOCTYPE html>
@@ -67,6 +107,7 @@ export async function GET(request) {
   <meta property="theme-color" content="${color}">
   ${image ? `<meta property="og:image" content="${image}">` : ""}
   <meta property="og:type" content="website">
+  <link type="application/json+oembed" href="${oembedUrl}" />
   
   <style>
     body {
@@ -118,13 +159,25 @@ export async function GET(request) {
       margin: 20px 0;
     }
     
-    a {
-      color: #00aff4;
-      text-decoration: none;
+    .embed-author {
+     font-size: 0.8rem;
+    margin-bottom: 4px;
+    color: #dcddde;
     }
-    
+
+    .embed-provider {
+    font-size: 0.8rem;
+    margin-top: 8px;
+    color: #dcddde;
+    }
+
+    a {
+    color: #00aff4;
+    text-decoration: none;
+    }
+
     a:hover {
-      text-decoration: underline;
+        text-decoration: underline;
     }
     
     .container {
@@ -162,11 +215,33 @@ export async function GET(request) {
       </div>
       
       <h2>Preview</h2>
-      <div class="embed-container">
-        ${title ? `<div class="embed-title">${title}</div>` : ""}
-        ${description ? `<div class="embed-description">${description}</div>` : ""}
-        ${image ? `<img src="${image}" alt="Embed image" class="embed-image">` : ""}
-      </div>
+<div class="embed-container">
+  ${
+    authorName
+      ? `<div class="embed-author">
+      ${
+        authorUrl
+          ? `<a href="${authorUrl}" target="_blank" style="color: #00aff4; text-decoration: none;">${authorName}</a>`
+          : `<span>${authorName}</span>`
+      }
+    </div>`
+      : ""
+  }
+  ${title ? `<div class="embed-title">${title}</div>` : ""}
+  ${description ? `<div class="embed-description">${description}</div>` : ""}
+  ${image ? `<img src="${image}" alt="Embed image" class="embed-image">` : ""}
+  ${
+    providerName
+      ? `<div class="embed-provider">
+      ${
+        providerUrl
+          ? `<a href="${providerUrl}" target="_blank" style="color: #00aff4; text-decoration: none;">${providerName}</a>`
+          : `<span>${providerName}</span>`
+      }
+    </div>`
+      : ""
+  }
+</div>
     </div>
   </main>
   

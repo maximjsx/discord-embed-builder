@@ -23,6 +23,7 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Textarea } from "@heroui/input";
 import { PopoverContent, PopoverTrigger, Popover } from "@heroui/popover";
+import { Accordion, AccordionItem } from "@heroui/accordion";
 import { useState } from "react";
 import ColorPicker from "@/components/custom/ColorPicker";
 
@@ -117,6 +118,56 @@ export default function EmbedForm({ embedData, onChange }) {
           </Popover>
         </div>
       </div>
+
+      <Accordion>
+        <AccordionItem title="Author">
+          <div className="flex flex-col gap-4 mt-2">
+            <Input
+              id="authorName"
+              label="Author Name"
+              labelPlacement="inside"
+              value={embedData.authorName}
+              onChange={(e) => onChange("authorName", e.target.value)}
+              placeholder="Author name"
+              className="w-full"
+            />
+
+            <Input
+              id="authorUrl"
+              label="Author URL"
+              labelPlacement="inside"
+              value={embedData.authorUrl}
+              onChange={(e) => onChange("authorUrl", e.target.value)}
+              placeholder="https://example.com"
+              className="w-full"
+            />
+          </div>
+        </AccordionItem>
+
+        <AccordionItem title="Provider">
+          <div className="flex flex-col gap-4 mt-2">
+            <Input
+              id="providerName"
+              label="Provider Name"
+              labelPlacement="inside"
+              value={embedData.providerName}
+              onChange={(e) => onChange("providerName", e.target.value)}
+              placeholder="Provider name"
+              className="w-full"
+            />
+
+            <Input
+              id="providerUrl"
+              label="Provider URL"
+              labelPlacement="inside"
+              value={embedData.providerUrl}
+              onChange={(e) => onChange("providerUrl", e.target.value)}
+              placeholder="https://example.com"
+              className="w-full"
+            />
+          </div>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }

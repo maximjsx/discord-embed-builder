@@ -19,13 +19,28 @@
  * contact@maximjsx.com
  */
 
-import { Card, CardHeader, CardBody } from "@heroui/card";
+import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 
 export default function EmbedPreview({ data }) {
   return (
     <Card
       className="bg-gray-800 border-l-4 w-full"
       style={{ borderLeftColor: data.color || "#5865F2" }}>
+      {data.authorName && (
+        <div className="px-4 pt-2 text-sm text-gray-400">
+          {data.authorUrl ? (
+            <a
+              href={data.authorUrl}
+              className="hover:underline text-blue-400"
+              target="_blank"
+              rel="noopener noreferrer">
+              {data.authorName}
+            </a>
+          ) : (
+            <span>{data.authorName}</span>
+          )}
+        </div>
+      )}
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
         <h4 className="font-bold text-lg text-white">
           {data.title || "A title"}
@@ -48,6 +63,23 @@ export default function EmbedPreview({ data }) {
           />
         </div>
       </CardBody>
+      {data.providerName && (
+        <CardFooter className="pt-0 pb-2 px-4">
+          <div className="text-sm text-gray-400">
+            {data.providerUrl ? (
+              <a
+                href={data.providerUrl}
+                className="hover:underline text-blue-400"
+                target="_blank"
+                rel="noopener noreferrer">
+                {data.providerName}
+              </a>
+            ) : (
+              <span>{data.providerName}</span>
+            )}
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 }
