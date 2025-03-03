@@ -101,7 +101,7 @@ export default function Home() {
       title: "",
       description: "",
       image: "",
-      color: ""
+      color: "",
     });
     setHideUrlText("");
     setHideURL(false);
@@ -181,7 +181,7 @@ export default function Home() {
                 <Button
                   color="primary"
                   onPress={handleCopy}
-                  className="min-w-[100px]">
+                  className="min-w-[100px] h-[var(--input-height-lg)]">
                   {copied ? (
                     <CheckIcon className="h-4 w-4" />
                   ) : (
