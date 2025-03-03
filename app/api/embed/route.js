@@ -257,7 +257,7 @@ export async function GET(request) {
           ${
             title
               ? `<div class="embed-title">
-              <a href="${request.url}" target="_blank">${title}</a>
+              <a href="/">${title}</a>
             </div>`
               : ""
           }
