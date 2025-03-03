@@ -27,7 +27,8 @@ export async function GET(request) {
 
   let title = "",
     description = "",
-    image = "";
+    image = "",
+    color = "";
 
   const encryptedData = searchParams.get("data");
   if (encryptedData) {
@@ -40,6 +41,7 @@ export async function GET(request) {
         title = parsedData.t || "";
         description = parsedData.d || "";
         image = parsedData.i || "";
+        color = parsedData.c || "#5865F2";
       }
     } catch (error) {
       console.error("Error decoding data:", error);
@@ -49,9 +51,8 @@ export async function GET(request) {
     description =
       searchParams.get("d") || searchParams.get("description") || "";
     image = searchParams.get("i") || searchParams.get("image") || "";
+    color = searchParams.get("c") || searchParams.get("color") || "#5865F2";
   }
-
-  const color = "#5865F2";
 
   const html = `
 <!DOCTYPE html>

@@ -20,9 +20,16 @@
  */
 
 import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
 import { Textarea } from "@heroui/input";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import { PopoverContent, PopoverTrigger, Popover } from "@heroui/popover";
+import { useState } from "react";
+import ColorPicker from "@/components/custom/ColorPicker";
 
 export default function EmbedForm({ embedData, onChange }) {
+  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+
   return (
     <div className="flex flex-col gap-4">
       <div>
@@ -60,9 +67,56 @@ export default function EmbedForm({ embedData, onChange }) {
           labelPlacement="inside"
           value={embedData.image}
           onChange={(e) => onChange("image", e.target.value)}
-          placeholder="https://domain.com/image.png"
+          placeholder="https://domain.com/cooldude.gif"
           className="w-full"
         />
+      </div>
+
+      <Input
+        id="url"
+        label="URL (title link)"
+        labelPlacement="inside"
+        value={embedData.url}
+        onChange={(e) => onChange("url", e.target.value)}
+        placeholder="Soon! (Doesn't do anything yet)"
+        className="w-full"
+      />
+
+      <div>
+        <label htmlFor="colorPicker" className="block text-sm mb-1">
+          Color
+        </label>
+        <div className="flex gap-2 items-center">
+          <div
+            className="w-10 h-10 rounded border border-gray-600 cursor-pointer"
+            style={{ backgroundColor: embedData.color || "#5865F2" }}
+            role="button"
+            tabIndex={0}
+            id="colorPicker"
+            aria-label="Open color picker"
+            onClick={() => setColorPickerOpen(true)}
+          />
+          <Input
+            value={embedData.color || "#5865F2"}
+            onChange={(e) => onChange("color", e.target.value)}
+            placeholder="#5865F2"
+            className="w-32"
+          />
+          <Popover isOpen={colorPickerOpen} onOpenChange={setColorPickerOpen}>
+            <PopoverTrigger>
+              <Button>Pick Color</Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <ColorPicker
+                color={embedData.color || "#5865F2"}
+                onChange={(color) => {
+                  onChange("color", color);
+                  setColorPickerOpen(false);
+                }}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
     </div>
   );

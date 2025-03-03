@@ -37,6 +37,7 @@ export default function Home() {
     title: "",
     description: "",
     image: "",
+    color: "",
   });
 
   const [generatedUrl, setGeneratedUrl] = useState("");
@@ -62,6 +63,7 @@ export default function Home() {
           t: embedData.title,
           d: embedData.description,
           i: embedData.image,
+          c: embedData.color,
         })
       );
       setGeneratedUrl(
@@ -72,6 +74,7 @@ export default function Home() {
       if (embedData.title) params.append("t", embedData.title);
       if (embedData.description) params.append("d", embedData.description);
       if (embedData.image) params.append("i", embedData.image);
+      if (embedData.color) params.append("c", embedData.color);
       setGeneratedUrl(`${hide + baseUrl}?${params.toString()}`);
     }
   }, [embedData, encryptUrl, hideUrlText, hideUrl]);
@@ -98,6 +101,7 @@ export default function Home() {
       title: "",
       description: "",
       image: "",
+      color: ""
     });
     setHideUrlText("");
     setHideURL(false);
