@@ -129,27 +129,54 @@ export async function GET(request) {
       margin: 20px 0;
       word-wrap: break-word;
       overflow-wrap: break-word;
+      display: flex;
+    }
+    
+    .embed-content {
+      flex-grow: 1;
+    }
+    
+    .embed-provider {
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+      color: #a0a0a0;
+    }
+    
+    .embed-author {
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #ffffff;
     }
     
     .embed-title {
       font-weight: bold;
-      font-size: 20px;
+      font-size: 1.1rem;
       margin-bottom: 8px;
-      color: #FFFFFF;
+    }
+    
+    .embed-title a {
+      color: #00aff4;
     }
     
     .embed-description {
+      font-size: 0.95rem;
       white-space: pre-wrap;
-      color: #dcddde;
+      color: #a0a0a0;
       word-wrap: break-word;
       overflow-wrap: break-word;
     }
     
+    .embed-image-container {
+      margin-left: 16px;
+      flex-shrink: 0;
+      max-width: 30%;
+    }
+    
     .embed-image {
       max-width: 100%;
-      max-height: 300px;
+      max-height: 140px;
       border-radius: 4px;
-      margin-top: 16px;
     }
     
     .info-box {
@@ -159,25 +186,13 @@ export async function GET(request) {
       margin: 20px 0;
     }
     
-    .embed-author {
-     font-size: 0.8rem;
-    margin-bottom: 4px;
-    color: #dcddde;
-    }
-
-    .embed-provider {
-    font-size: 0.8rem;
-    margin-top: 8px;
-    color: #dcddde;
-    }
-
     a {
-    color: #00aff4;
-    text-decoration: none;
+      color: #00aff4;
+      text-decoration: none;
     }
-
+    
     a:hover {
-        text-decoration: underline;
+      text-decoration: underline;
     }
     
     .container {
@@ -215,33 +230,47 @@ export async function GET(request) {
       </div>
       
       <h2>Preview</h2>
-<div class="embed-container">
-  ${
-    authorName
-      ? `<div class="embed-author">
-      ${
-        authorUrl
-          ? `<a href="${authorUrl}" target="_blank" style="color: #00aff4; text-decoration: none;">${authorName}</a>`
-          : `<span>${authorName}</span>`
-      }
-    </div>`
-      : ""
-  }
-  ${title ? `<div class="embed-title">${title}</div>` : ""}
-  ${description ? `<div class="embed-description">${description}</div>` : ""}
-  ${image ? `<img src="${image}" alt="Embed image" class="embed-image">` : ""}
-  ${
-    providerName
-      ? `<div class="embed-provider">
-      ${
-        providerUrl
-          ? `<a href="${providerUrl}" target="_blank" style="color: #00aff4; text-decoration: none;">${providerName}</a>`
-          : `<span>${providerName}</span>`
-      }
-    </div>`
-      : ""
-  }
-</div>
+      <div class="embed-container">
+        <div class="embed-content">
+          ${
+            providerName
+              ? `<div class="embed-provider">
+              ${
+                providerUrl
+                  ? `<a href="${providerUrl}" target="_blank">${providerName}</a>`
+                  : `<span>${providerName}</span>`
+              }
+            </div>`
+              : ""
+          }
+          ${
+            authorName
+              ? `<div class="embed-author">
+              ${
+                authorUrl
+                  ? `<a href="${authorUrl}" target="_blank">${authorName}</a>`
+                  : `<span>${authorName}</span>`
+              }
+            </div>`
+              : ""
+          }
+          ${
+            title
+              ? `<div class="embed-title">
+              <a href="${request.url}" target="_blank">${title}</a>
+            </div>`
+              : ""
+          }
+          ${description ? `<div class="embed-description">${description}</div>` : ""}
+        </div>
+        ${
+          image
+            ? `<div class="embed-image-container">
+            <img src="${image}" alt="Embed image" class="embed-image">
+          </div>`
+            : ""
+        }
+      </div>
     </div>
   </main>
   
@@ -250,7 +279,7 @@ export async function GET(request) {
   </footer>
 </body>
 </html>
-  `;
+`;
 
   return new NextResponse(html, {
     headers: {
