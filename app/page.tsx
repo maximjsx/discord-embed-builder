@@ -164,28 +164,30 @@ export default function Home() {
                 </Switch>
               </div>
               <div>
-                <Switch
-                  id="hideUrl"
-                  isSelected={hideUrl}
-                  onValueChange={setHideURL}>
-                  Hide URL in chat message
-                </Switch>
-                {hideUrl && (
-                  <div className="mt-2 mb-5">
-                    <Textarea
-                      id="urlReplacement"
-                      label="URL replacement"
-                      labelPlacement="inside"
-                      value={hideUrlText}
-                      onChange={(e) => {
-                        setHideUrlText(e.target.value);
-                        e.target.style.height = "auto";
-                        e.target.style.height = e.target.scrollHeight + "px";
-                      }}
-                      placeholder="Custom text to display instead of URL"
-                    />
-                  </div>
-                )}
+                <Tooltip content="Enabling this option adds a long string to the URL, causing a glitch that makes the URL invisible in your Discord message. Just copy the entire message below and paste it into Discord.">
+                  <Switch
+                    id="hideUrl"
+                    isSelected={hideUrl}
+                    onValueChange={setHideURL}>
+                    Hide URL in chat message
+                  </Switch>
+                  {hideUrl && (
+                    <div className="mt-2 mb-5">
+                      <Textarea
+                        id="urlReplacement"
+                        label="URL replacement"
+                        labelPlacement="inside"
+                        value={hideUrlText}
+                        onChange={(e) => {
+                          setHideUrlText(e.target.value);
+                          e.target.style.height = "auto";
+                          e.target.style.height = e.target.scrollHeight + "px";
+                        }}
+                        placeholder="Custom text to display instead of URL"
+                      />
+                    </div>
+                  )}
+                </Tooltip>
               </div>
             </div>
 
