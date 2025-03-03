@@ -22,7 +22,6 @@
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Textarea } from "@heroui/input";
-import { Accordion, AccordionItem } from "@heroui/accordion";
 import { PopoverContent, PopoverTrigger, Popover } from "@heroui/popover";
 import { useState } from "react";
 import ColorPicker from "@/components/custom/ColorPicker";
