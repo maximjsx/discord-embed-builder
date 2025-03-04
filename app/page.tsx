@@ -156,12 +156,14 @@ export default function Home() {
 
             <div className="mb-4 flex flex-col gap-4">
               <div>
-                <Switch
-                  id="encryptUrl"
-                  isSelected={encryptUrl}
-                  onValueChange={setEncryptUrl}>
-                  Hide parameters in URL
-                </Switch>
+                <Tooltip content="If enabled, all your parameters like title or description will be encoded into an unreadable string.">
+                  <Switch
+                    id="encryptUrl"
+                    isSelected={encryptUrl}
+                    onValueChange={setEncryptUrl}>
+                    Hide parameters in URL
+                  </Switch>
+                </Tooltip>
               </div>
               <div>
                 <Tooltip content="Enabling this option adds a long string to the URL, causing a glitch that makes the URL invisible in your Discord message. Just copy the entire message below and paste it into Discord.">
@@ -192,12 +194,14 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-2 mb-6">
-              <Input
-                value={generatedUrl}
-                readOnly
-                className="flex-grow"
-                size="lg"
-              />
+              <Tooltip content="Paste this entire string into Discord">
+                <Input
+                  value={generatedUrl}
+                  readOnly
+                  className="flex-grow"
+                  size="lg"
+                />
+              </Tooltip>
               <Tooltip content={copied ? "Copied!" : "Copy to clipboard"}>
                 <Button
                   color="primary"
