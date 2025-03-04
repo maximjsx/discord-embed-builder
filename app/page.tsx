@@ -156,7 +156,7 @@ export default function Home() {
 
             <div className="mb-4 flex flex-col gap-4">
               <div>
-                <Tooltip content="If enabled, all your parameters like title or description will be encoded into an unreadable string.">
+                <Tooltip content="If enabled, all parameters like title and description are encoded into an unreadable string.">
                   <Switch
                     id="encryptUrl"
                     isSelected={encryptUrl}
@@ -166,30 +166,30 @@ export default function Home() {
                 </Tooltip>
               </div>
               <div>
-                <Tooltip content="Enabling this option adds a long string to the URL, causing a glitch that makes the URL invisible in your Discord message. Just copy the entire message below and paste it into Discord.">
+                <Tooltip content="Enabling this option adds a long string to the URL, causing a glitch that makes the URL invisible in your Discord message.">
                   <Switch
                     id="hideUrl"
                     isSelected={hideUrl}
                     onValueChange={setHideURL}>
                     Hide URL in chat message
                   </Switch>
-                  {hideUrl && (
-                    <div className="mt-2 mb-5">
-                      <Textarea
-                        id="urlReplacement"
-                        label="URL replacement"
-                        labelPlacement="inside"
-                        value={hideUrlText}
-                        onChange={(e) => {
-                          setHideUrlText(e.target.value);
-                          e.target.style.height = "auto";
-                          e.target.style.height = e.target.scrollHeight + "px";
-                        }}
-                        placeholder="Custom text to display instead of URL"
-                      />
-                    </div>
-                  )}
                 </Tooltip>
+                {hideUrl && (
+                  <div className="mt-2 mb-5">
+                    <Textarea
+                      id="urlReplacement"
+                      label="URL replacement"
+                      labelPlacement="inside"
+                      value={hideUrlText}
+                      onChange={(e) => {
+                        setHideUrlText(e.target.value);
+                        e.target.style.height = "auto";
+                        e.target.style.height = e.target.scrollHeight + "px";
+                      }}
+                      placeholder="Custom text to display instead of URL"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
