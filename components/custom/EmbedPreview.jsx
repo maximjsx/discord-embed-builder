@@ -80,7 +80,7 @@ export default function EmbedPreview({ data }) {
                 data.image ||
                 "https://media1.tenor.com/m/p-rnE8Gy6ccAAAAd/indian-guy-funny-indian-guy.gif"
               }
-              alt="Large image"
+              alt="Large"
               className="rounded-md w-full object-cover"
               style={{ maxHeight: "300px" }}
             />

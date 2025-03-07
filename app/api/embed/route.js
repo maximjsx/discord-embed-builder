@@ -285,7 +285,7 @@ export async function GET(request) {
           ${
             image && largeImage
               ? `<div>
-                <img src="${image}" alt="Large embed image" class="embed-large-image">
+                <img src="${image}" alt="Large embed" class="embed-large-image">
               </div>`
               : ""
           }
@@ -293,7 +293,7 @@ export async function GET(request) {
         ${
           image && !largeImage
             ? `<div class="embed-image-container">
-            <img src="${image}" alt="Embed image" class="embed-image">
+            <img src="${image}" alt="Small" class="embed-image">
           </div>`
             : ""
         }
