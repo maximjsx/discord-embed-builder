@@ -115,6 +115,7 @@ export async function GET(request) {
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@maxim_jsx">
     <meta name="twitter:title" content="${title}">
+    <meta name="twitter:url" content="${baseUrl}">
     <meta name="twitter:description" content="${description}">
     <meta name="twitter:image" content="${image}">
   `
