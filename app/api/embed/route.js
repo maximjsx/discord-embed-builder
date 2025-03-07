@@ -56,7 +56,8 @@ export async function GET(request) {
     authorName = "",
     authorUrl = "",
     providerName = "",
-    providerUrl = "";
+    providerUrl = "",
+    largeImage = false;
 
   const encryptedData = searchParams.get("data");
   if (encryptedData) {
@@ -74,6 +75,7 @@ export async function GET(request) {
         authorUrl = parsedData.au || "";
         providerName = parsedData.pn || "";
         providerUrl = parsedData.pu || "";
+        largeImage = parsedData.li || false;
       }
     } catch (error) {
       console.error("Error decoding data:", error);
@@ -88,6 +90,7 @@ export async function GET(request) {
     authorUrl = searchParams.get("author_url") || "";
     providerName = searchParams.get("provider_name") || "";
     providerUrl = searchParams.get("provider_url") || "";
+    largeImage = searchParams.get("large_image") === "true";
   }
 
   const currentUrl = new URL(request.url);
@@ -105,7 +108,15 @@ export async function GET(request) {
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description}">
   <meta property="theme-color" content="${color}">
-  ${image ? `<meta property="og:image" content="${image}">` : ""}
+  ${
+    image
+      ? largeImage
+        ? `<meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="${image}">
+    <meta property="og:image" content="${image}">`
+        : `<meta property="og:image" content="${image}">`
+      : ""
+  }
   <meta property="og:type" content="website">
   <link type="application/json+oembed" href="${oembedUrl}" />
   
@@ -177,6 +188,14 @@ export async function GET(request) {
       max-width: 100%;
       max-height: 140px;
       border-radius: 4px;
+    }
+
+        .embed-large-image {
+      width: 100%;
+      max-height: 300px;
+      border-radius: 4px;
+      margin-top: 8px;
+      object-fit: cover;
     }
     
     .info-box {
@@ -262,9 +281,17 @@ export async function GET(request) {
               : ""
           }
           ${description ? `<div class="embed-description">${description}</div>` : ""}
+          
+          ${
+            image && largeImage
+              ? `<div>
+                <img src="${image}" alt="Large embed image" class="embed-large-image">
+              </div>`
+              : ""
+          }
         </div>
         ${
-          image
+          image && !largeImage
             ? `<div class="embed-image-container">
             <img src="${image}" alt="Embed image" class="embed-image">
           </div>`

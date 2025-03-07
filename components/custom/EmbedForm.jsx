@@ -26,6 +26,8 @@ import { PopoverContent, PopoverTrigger, Popover } from "@heroui/popover";
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { useState } from "react";
 import ColorPicker from "@/components/custom/ColorPicker";
+import { Tooltip } from "@heroui/tooltip";
+import { Switch } from "@heroui/switch";
 
 export default function EmbedForm({ embedData, onChange }) {
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
@@ -71,6 +73,19 @@ export default function EmbedForm({ embedData, onChange }) {
           className="w-full"
         />
       </div>
+
+      {
+        <div className="mt-2">
+          <Tooltip content="Toggle between thumbnail and large image display modes">
+            <Switch
+              id="largeImage"
+              isSelected={embedData.largeImage}
+              onValueChange={(value) => onChange("largeImage", value)}>
+              Display as large image
+            </Switch>
+          </Tooltip>
+        </div>
+      }
 
       <Input
         id="url"

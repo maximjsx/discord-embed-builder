@@ -58,7 +58,7 @@ export default function EmbedPreview({ data }) {
             </div>
           </div>
 
-          {
+          {!data.largeImage && (
             <div className="p-3 flex-shrink-0" style={{ maxWidth: "30%" }}>
               <img
                 src={
@@ -70,8 +70,22 @@ export default function EmbedPreview({ data }) {
                 style={{ maxHeight: "140px", maxWidth: "100%" }}
               />
             </div>
-          }
+          )}
         </div>
+
+        {data.largeImage && (
+          <div className="px-4 pb-4">
+            <img
+              src={
+                data.image ||
+                "https://media1.tenor.com/m/p-rnE8Gy6ccAAAAd/indian-guy-funny-indian-guy.gif"
+              }
+              alt="Large image"
+              className="rounded-md w-full object-cover"
+              style={{ maxHeight: "300px" }}
+            />
+          </div>
+        )}
       </div>
     </Card>
   );

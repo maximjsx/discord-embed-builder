@@ -42,6 +42,7 @@ export default function Home() {
     authorUrl: "",
     providerName: "",
     providerUrl: "",
+    largeImage: false,
   });
 
   const [generatedUrl, setGeneratedUrl] = useState("");
@@ -72,6 +73,7 @@ export default function Home() {
           au: embedData.authorUrl,
           pn: embedData.providerName,
           pu: embedData.providerUrl,
+          li: embedData.largeImage,
         })
       );
       setGeneratedUrl(
@@ -83,13 +85,13 @@ export default function Home() {
       if (embedData.description) params.append("d", embedData.description);
       if (embedData.image) params.append("i", embedData.image);
       if (embedData.color) params.append("c", embedData.color);
-      if (embedData.authorName)
-        params.append("author_name", embedData.authorName);
-      if (embedData.authorUrl) params.append("author_url", embedData.authorUrl);
-      if (embedData.providerName)
-        params.append("provider_name", embedData.providerName);
-      if (embedData.providerUrl)
-        params.append("provider_url", embedData.providerUrl);
+      if (embedData.authorName) params.append("an", embedData.authorName);
+      if (embedData.authorUrl) params.append("au", embedData.authorUrl);
+      if (embedData.providerName) params.append("pn", embedData.providerName);
+      if (embedData.providerUrl) params.append("pu", embedData.providerUrl);
+      setGeneratedUrl(`${hide + baseUrl}?${params.toString()}`);
+      if (embedData.largeImage)
+        params.append("li", String(embedData.largeImage));
       setGeneratedUrl(`${hide + baseUrl}?${params.toString()}`);
     }
   }, [embedData, encryptUrl, hideUrlText, hideUrl]);
@@ -121,6 +123,7 @@ export default function Home() {
       authorUrl: "",
       providerName: "",
       providerUrl: "",
+      largeImage: false,
     });
     setHideUrlText("");
     setHideURL(false);
