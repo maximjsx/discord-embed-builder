@@ -86,11 +86,11 @@ export async function GET(request) {
       searchParams.get("d") || searchParams.get("description") || "";
     image = searchParams.get("i") || searchParams.get("image") || "";
     color = searchParams.get("c") || searchParams.get("color") || "#5865F2";
-    authorName = searchParams.get("author_name") || "";
-    authorUrl = searchParams.get("author_url") || "";
-    providerName = searchParams.get("provider_name") || "";
-    providerUrl = searchParams.get("provider_url") || "";
-    largeImage = searchParams.get("large_image") === "true";
+    authorName = searchParams.get("an") || searchParams.get("author_name") || "";
+    authorUrl = searchParams.get("au") || searchParams.get("author_url") || "";
+    providerName = searchParams.get("pn") || searchParams.get("provider_name") || "";
+    providerUrl = searchParams.get("pu") || searchParams.get("provider_url") || "";
+    largeImage = searchParams.get("li") || searchParams.get("large_image") === "true";
   }
 
   const currentUrl = new URL(request.url);
@@ -108,12 +108,12 @@ export async function GET(request) {
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description}">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="${image}">
+  ${image ? `<meta property="og:image" content="${image}">` : ``}
   <meta property="theme-color" content="${color}">
   <link type="application/json+oembed" href="${oembedUrl}" />
 
   ${
-    largeImage
+    image && largeImage
       ? `
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@maxim_jsx">
