@@ -86,11 +86,15 @@ export async function GET(request) {
       searchParams.get("d") || searchParams.get("description") || "";
     image = searchParams.get("i") || searchParams.get("image") || "";
     color = searchParams.get("c") || searchParams.get("color") || "#5865F2";
-    authorName = searchParams.get("an") || searchParams.get("author_name") || "";
+    authorName =
+      searchParams.get("an") || searchParams.get("author_name") || "";
     authorUrl = searchParams.get("au") || searchParams.get("author_url") || "";
-    providerName = searchParams.get("pn") || searchParams.get("provider_name") || "";
-    providerUrl = searchParams.get("pu") || searchParams.get("provider_url") || "";
-    largeImage = searchParams.get("li") || searchParams.get("large_image") === "true";
+    providerName =
+      searchParams.get("pn") || searchParams.get("provider_name") || "";
+    providerUrl =
+      searchParams.get("pu") || searchParams.get("provider_url") || "";
+    largeImage =
+      searchParams.get("li") || searchParams.get("large_image") === "true";
   }
 
   const currentUrl = new URL(request.url);
@@ -105,13 +109,6 @@ export async function GET(request) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title || "Discord Embed"}</title>
   
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
-  <meta property="og:type" content="website">
-  ${image ? `<meta property="og:image" content="${image}">` : ``}
-  <meta property="theme-color" content="${color}">
-  <link type="application/json+oembed" href="${oembedUrl}" />
-
   ${
     image && largeImage
       ? `
@@ -123,7 +120,15 @@ export async function GET(request) {
   `
       : ""
   }
+
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:type" content="object">
+  ${image ? `<meta property="og:image" content="${image}">` : ``}
+  <meta property="theme-color" content="${color}">
   <link type="application/json+oembed" href="${oembedUrl}" />
+  <meta property="og:url" content="${baseUrl}">
+
   
   <style>
     body {
