@@ -107,16 +107,22 @@ export async function GET(request) {
   
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="${image}">
   <meta property="theme-color" content="${color}">
+  <link type="application/json+oembed" href="${oembedUrl}" />
+
   ${
-    image
-      ? largeImage
-        ? `<meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="${image}">`
-        : `<meta property="og:image" content="${image}">`
+    largeImage
+      ? `
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@maxim_jsx">
+    <meta name="twitter:title" content="${title}">
+    <meta name="twitter:description" content="${description}">
+    <meta name="twitter:image" content="${image}">
+  `
       : ""
   }
-  <meta property="og:type" content="website">
   <link type="application/json+oembed" href="${oembedUrl}" />
   
   <style>
