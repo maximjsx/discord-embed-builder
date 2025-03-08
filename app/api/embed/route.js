@@ -122,7 +122,7 @@ export async function GET(request) {
       : ""
   }
 
-  <meta property="og:title" content="${title}">
+  <meta property="og:title" content="${title ? title : largeImage ? "\u200e" : ""}">
   <meta property="og:description" content="${description}">
   <meta property="og:type" content="object">
   ${image ? `<meta property="og:image" content="${image}">` : ``}
