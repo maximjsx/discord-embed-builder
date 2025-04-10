@@ -63,7 +63,7 @@ export default function EmbedPreview({ data }) {
               <img
                 src={
                   data.image ||
-                  "https://media1.tenor.com/m/p-rnE8Gy6ccAAAAd/indian-guy-funny-indian-guy.gif"
+                  ""
                 }
                 alt="Thumbnail"
                 className="rounded-md object-cover"
